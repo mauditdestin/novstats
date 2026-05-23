@@ -1,32 +1,20 @@
-const keyInput = document.getElementById('faceit-key');
-const saveBtn = document.getElementById('save-btn');
-const statusEl = document.getElementById('status');
-const toggleBtn = document.getElementById('toggle-visibility');
+const DEFAULTS = { showLeetify: true, showCSStats: true, showFaceit: true };
 
-// Load saved key
-chrome.storage.sync.get(['faceitApiKey'], ({ faceitApiKey }) => {
-  if (faceitApiKey) keyInput.value = faceitApiKey;
+const toggles = {
+  leetify: document.getElementById('t-leetify'),
+  csstats: document.getElementById('t-csstats'),
+  faceit:  document.getElementById('t-faceit')
+};
+
+chrome.storage.sync.get(DEFAULTS, prefs => {
+  toggles.leetify.checked = prefs.showLeetify;
+  toggles.csstats.checked = prefs.showCSStats;
+  toggles.faceit.checked  = prefs.showFaceit;
 });
 
-// Toggle password visibility
-toggleBtn.addEventListener('click', () => {
-  keyInput.type = keyInput.type === 'password' ? 'text' : 'password';
-});
-
-// Save key
-saveBtn.addEventListener('click', () => {
-  const key = keyInput.value.trim();
-  chrome.storage.sync.set({ faceitApiKey: key }, () => {
-    showStatus(key ? '&#10003; Clé sauvegardée !' : '&#10003; Clé supprimée', key ? 'ok' : 'warn');
+Object.entries(toggles).forEach(([key, el]) => {
+  el.addEventListener('change', () => {
+    const map = { leetify: 'showLeetify', csstats: 'showCSStats', faceit: 'showFaceit' };
+    chrome.storage.sync.set({ [map[key]]: el.checked });
   });
 });
-
-keyInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') saveBtn.click();
-});
-
-function showStatus(msg, type) {
-  statusEl.innerHTML = msg;
-  statusEl.className = `status status-${type}`;
-  setTimeout(() => { statusEl.textContent = ''; statusEl.className = 'status'; }, 2500);
-}

@@ -49,7 +49,6 @@
   "permissions": ["storage"],
   "host_permissions": [
     "*://steamcommunity.com/*",
-    "*://open.faceit.com/*",
     "*://csstats.gg/*",
     "*://api.cs2ps.com/*"
   ]

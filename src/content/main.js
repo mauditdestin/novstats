@@ -10,23 +10,40 @@
   const steam64id = await getSteam64Id();
   if (!steam64id) return;
 
+  const prefs = await getPrefs();
+
   const panel = NovStatsUI.create();
   NovStatsUI.inject(panel);
   NovStatsEvents.setup(panel);
 
+  if (!prefs.showLeetify) document.getElementById('ns-sec-leetify').style.display = 'none';
+  if (!prefs.showCSStats) document.getElementById('ns-sec-csstats').style.display = 'none';
+  if (!prefs.showFaceit)  document.getElementById('ns-sec-faceit').style.display  = 'none';
+
   document.getElementById('ns-leetify-logo-link').href = `https://leetify.com/app/profile/${steam64id}`;
   document.getElementById('ns-csstats-logo-link').href = `https://csstats.gg/player/${steam64id}`;
 
+  const skip = () => Promise.reject(new Error('disabled'));
+
   const [leetifyResult, csstatsResult, faceitResult] = await Promise.allSettled([
-    fetchLeetifyStats(steam64id),
-    fetchCSStatsData(steam64id),
-    fetchFaceitStats(steam64id)
+    prefs.showLeetify ? fetchLeetifyStats(steam64id) : skip(),
+    prefs.showCSStats ? fetchCSStatsData(steam64id)  : skip(),
+    prefs.showFaceit  ? fetchFaceitStats(steam64id)  : skip()
   ]);
 
-  NovStatsDataBinder.bindLeetify(leetifyResult.status === 'fulfilled' ? leetifyResult.value : null);
-  NovStatsDataBinder.bindCSStats(csstatsResult.status === 'fulfilled' ? csstatsResult.value : null);
-  NovStatsDataBinder.bindFaceit(faceitResult.status  === 'fulfilled' ? faceitResult.value  : null);
+  if (prefs.showLeetify) NovStatsDataBinder.bindLeetify(leetifyResult.status === 'fulfilled' ? leetifyResult.value : null);
+  if (prefs.showCSStats) NovStatsDataBinder.bindCSStats(csstatsResult.status === 'fulfilled' ? csstatsResult.value : null);
+  if (prefs.showFaceit)  NovStatsDataBinder.bindFaceit(faceitResult.status   === 'fulfilled' ? faceitResult.value  : null);
 })();
+
+function getPrefs() {
+  return new Promise(resolve => {
+    chrome.storage.sync.get(
+      { showLeetify: true, showCSStats: true, showFaceit: true },
+      resolve
+    );
+  });
+}
 
 async function getSteam64Id() {
   const url = window.location.href;
@@ -74,10 +91,5 @@ async function fetchCSStatsData(steam64id) {
 }
 
 async function fetchFaceitStats(steam64id) {
-  try {
-    return await FaceitAPI.getAllData(steam64id);
-  } catch (e) {
-    if (e.message === 'NO_API_KEY') return { error: 'NO_API_KEY' };
-    throw e;
-  }
+  return FaceitAPI.getAllData(steam64id);
 }

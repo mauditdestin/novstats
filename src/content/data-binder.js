@@ -86,11 +86,6 @@ const NovStatsDataBinder = {
 
     if (!data) { error.style.display = 'flex'; return; }
 
-    if (data.error === 'NO_API_KEY') {
-      document.getElementById('ns-faceit-error-msg').textContent = '⚙ Configure ta clé API Faceit (clic sur l\'icône)';
-      error.style.display = 'flex'; return;
-    }
-
     grid.style.display = 'grid';
 
     const profile = document.getElementById('ns-faceit-profile');
@@ -125,9 +120,15 @@ const NovStatsDataBinder = {
       const link = document.getElementById('ns-faceit-logo-link');
       if (link) link.href = `https://www.faceit.com/en/players/${data.nickname}`;
     }
-    if (data.createdAt) {
-      document.getElementById('ns-faceit-registered').textContent =
-        '(' + NovStatsFormatters.date(data.createdAt) + ')';
+    const memberEl = document.getElementById('ns-faceit-registered');
+    if (memberEl && data.membership) {
+      const lc = data.membership.toLowerCase();
+      let label, color;
+      if (lc === 'premium')             { label = 'Faceit Premium'; color = '#ff5500'; }
+      else if (lc === 'free+' || lc === 'plus') { label = 'Faceit Plus';    color = '#ffaa00'; }
+      else                              { label = 'Free';           color = '#6b7d8e'; }
+      memberEl.textContent = '· ' + label;
+      memberEl.style.color = color;
     }
 
     const eloEl = document.getElementById('ns-elo-val');
