@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>NOVSTATS</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="logo">NOV<span class="accent">STATS</span></span>
+      <span class="version">v1.0</span>
+    </div>
+
+    <div class="body">
+      <p class="desc">Affiche les stats CS2 directement sur les profils Steam.</p>
+
+      <div class="field">
+        <label for="faceit-key">Clé API Faceit</label>
+        <div class="input-wrap">
+          <input type="password" id="faceit-key" placeholder="Colle ta clé ici..." autocomplete="off" />
+          <button class="eye-btn" id="toggle-visibility" title="Afficher/Masquer">&#128065;</button>
+        </div>
+        <a class="get-key-link" href="https://developers.faceit.com/" target="_blank">
+          &#8599; Obtenir une clé API Faceit
+        </a>
+      </div>
+
+      <button class="save-btn" id="save-btn">Sauvegarder</button>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

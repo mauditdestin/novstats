@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════
+   NOVSTATS — content.css
+   Thème : blanc / bleu, structure identique à la ref
+   ═══════════════════════════════════════════════════ */
+
+/* ── Root wrapper ── */
+.novstats-root {
+  margin-bottom: 8px;
+  font-family: 'Motiva Sans', Arial, sans-serif;
+}
+
+/* ── Header principal (Steam native class .profile_customization_header) ── */
+.novstats-root .profile_customization_header.ns-main-header {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 6px 10px !important;
+  border-bottom: 1px solid rgba(102, 192, 244, 0.12) !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+.ns-main-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ns-logo {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #d0e4f4;
+}
+
+.ns-accent {
+  color: #66c0f4;
+}
+
+.ns-collapse-btn {
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  color: white;
+  font-size: 13px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.ns-collapse-btn:hover {
+  filter: brightness(0.75);
+}
+
+/* ── Sections (Steam native .showcase_content_bg fournit le fond sombre) ── */
+.novstats-root .showcase_content_bg.ns-section {
+  padding: 10px 12px !important;
+  margin-bottom: 4px !important;
+}
+
+/* ── Header de section ── */
+.ns-sec-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 38px;
+  margin-bottom: 10px;
+}
+
+.ns-sec-header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.ns-sec-header-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.ns-sec-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ns-sec-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e0eaf4;
+}
+
+.ns-sec-sub {
+  font-size: 11px;
+  color: #3a5060;
+}
+
+/* ── Image logos (remplacent les placeholders) ── */
+.ns-logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 3px 6px;
+}
+
+#ns-leetify-logo-link,
+#ns-csstats-logo-link,
+#ns-faceit-logo-link {
+  display: flex;
+}
+
+#ns-leetify-logo-link:hover .ns-logo-img,
+#ns-csstats-logo-link:hover .ns-logo-img,
+#ns-faceit-logo-link:hover .ns-logo-img {
+  filter: brightness(0.75);
+}
+
+.ns-badge-img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.ns-level-img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.ns-flag-img {
+  height: 18px;
+  width: auto;
+  display: block;
+}
+
+/* ── Placeholders (remplacés par de vraies images) ── */
+.ns-ph {
+  border: 1px dashed rgba(102, 192, 244, 0.2);
+  color: rgba(102, 192, 244, 0.35);
+  font-size: 8px;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  user-select: none;
+  background: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.ns-ph-logo {
+  width: 80px;
+  height: 30px;
+}
+
+.ns-ph-badge {
+  width: 90px;
+  height: 36px;
+}
+
+.ns-ph-level {
+  width: 36px;
+  height: 36px;
+  font-size: 9px;
+}
+
+.ns-ph-flag {
+  width: 24px;
+  height: 18px;
+  font-size: 11px;
+}
+
+/* ── Premier ELO header (section CSStats) ── */
+.ns-premier-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.ns-premier-label {
+  color: white;
+  font-size: 16px;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.ns-premier-sep {
+  color: #2a3a4a;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.ns-premier-chip {
+  display: flex;
+  align-items: center;
+}
+
+.ns-premier-rating {
+  height: 28px;
+  display: flex;
+  position: relative;
+}
+
+.ns-premier-rating > img {
+  height: 100%;
+  width: auto;
+}
+
+.ns-premier-rating > span {
+  position: absolute;
+  line-height: 28px;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+  text-indent: 10px;
+  transform: skew(-10deg, 0deg);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── Profil Faceit dans le header ── */
+.ns-faceit-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.ns-faceit-name-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.ns-faceit-name-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.ns-faceit-nick {
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.ns-faceit-reg {
+  color: #6b8090;
+  font-size: 13px;
+}
+
+.ns-elo {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Loading ── */
+.ns-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #4a6070;
+  font-size: 13px;
+  padding: 4px 0 12px;
+}
+
+/* ── Error ── */
+.ns-error {
+  display: flex;
+  align-items: center;
+  color: #e26070;
+  font-size: 13px;
+  padding: 4px 0 12px;
+}
+
+/* ══════════════════════════════════════════════
+   Grille de stats — style identique à la référence
+   4 colonnes, label en haut (gris), valeur en bas (blanc)
+   ══════════════════════════════════════════════ */
+.ns-details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.ns-cell {
+  color: #c4c4c4;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  padding: 6px 4px;
+  min-height: 48px;
+}
+
+.ns-cell > span {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+
+/* Cellule "Récents" — prend 2 colonnes sur mobile / 1 sur grand écran */
+.ns-cell-recent {
+  grid-column: span 2;
+}
+
+/* ── Résultats récents (W / L dans la cellule Récents) ── */
+.ns-recent-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.ns-recent-wrap > span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ns-result-w { color: #86fc8c; }
+.ns-result-l { color: #ff879b; }
+.ns-result-t { color: #f4c542; }
+.ns-result-unknown { color: #4a6070; }
