@@ -60,15 +60,15 @@ const NovStatsUI = {
           ${this._cell('Matchs',      'leetify-matches')}
           ${this._cell('1er Match',   'leetify-first-match')}
           ${this._cell('Winrate',     'leetify-winrate')}
-          ${this._cell('KD',          'leetify-kd')}
           ${this._cell('Rating',      'leetify-rating')}
-          ${this._cell('Aim',         'leetify-aim')}
-          ${this._cell('Positioning', 'leetify-positioning')}
-          ${this._cell('Utility',     'leetify-utility')}
           ${this._cell('Clutching',   'leetify-clutching')}
           ${this._cell('Opening',     'leetify-opening')}
           ${this._cell('Pre-aim',     'leetify-preaim')}
           ${this._cell('Reaction',    'leetify-reaction')}
+          ${this._cell('KD',          'leetify-kd')}
+          ${this._cell('Aim',         'leetify-aim')}
+          ${this._cell('Positioning', 'leetify-positioning')}
+          ${this._cell('Utility',     'leetify-utility')}
         </div>
       </div>
     `;

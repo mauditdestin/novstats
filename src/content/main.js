@@ -62,10 +62,9 @@ function resolveVanityUrl(vanity) {
 }
 
 async function fetchLeetifyStats(steam64id) {
-  const raw = await LeetifyAPI.getProfile(steam64id);
-  const stats = LeetifyAPI.extractStats(raw);
-  if (!stats) throw new Error('no data');
-  return stats;
+  const data = await LeetifyAPI.getProfile(steam64id);
+  if (!data) throw new Error('no data');
+  return data;
 }
 
 async function fetchCSStatsData(steam64id) {

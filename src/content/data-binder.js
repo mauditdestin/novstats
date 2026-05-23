@@ -1,33 +1,36 @@
 const NovStatsDataBinder = {
 
   // ── Leetify ────────────────────────────────────────────────────────────
-  bindLeetify(stats) {
+  bindLeetify(data) {
     const loading = document.getElementById('ns-leetify-loading');
     const error   = document.getElementById('ns-leetify-error');
     const grid    = document.getElementById('ns-leetify-grid');
 
     loading.style.display = 'none';
 
-    if (!stats) {
+    if (!data) { error.style.display = 'flex'; return; }
+
+    if (data.status === 404) {
       document.getElementById('ns-leetify-error-msg').textContent = '⚠ Profil non enregistré sur Leetify';
-      error.style.display = 'flex';
-      return;
+      error.style.display = 'flex'; return;
     }
 
     grid.style.display = 'grid';
 
-    this._set('leetify-matches',    NovStatsFormatters.number(stats.matchesPlayed));
-    this._set('leetify-first-match',NovStatsFormatters.date(stats.firstMatchAt));
-    this._set('leetify-winrate',    NovStatsFormatters.percent(stats.winRate),     NovStatsFormatters.winrateColor(stats.winRate));
-    this._set('leetify-kd',         NovStatsFormatters.kd(stats.kd),               NovStatsFormatters.kdColor(stats.kd));
-    this._set('leetify-rating',     NovStatsFormatters.score(stats.rating),        NovStatsFormatters.scoreColor(stats.rating));
-    this._set('leetify-aim',        NovStatsFormatters.score(stats.aim),           NovStatsFormatters.scoreColor(stats.aim));
-    this._set('leetify-positioning',NovStatsFormatters.score(stats.positioning),   NovStatsFormatters.scoreColor(stats.positioning));
-    this._set('leetify-utility',    NovStatsFormatters.score(stats.utility),       NovStatsFormatters.scoreColor(stats.utility));
-    this._set('leetify-clutching',  NovStatsFormatters.score(stats.clutch),        NovStatsFormatters.scoreColor(stats.clutch));
-    this._set('leetify-opening',    NovStatsFormatters.score(stats.opening),       NovStatsFormatters.scoreColor(stats.opening));
-    this._set('leetify-preaim',     NovStatsFormatters.score(stats.preaim),        NovStatsFormatters.scoreColor(stats.preaim));
-    this._set('leetify-reaction',   NovStatsFormatters.ms(stats.reactionTime),     NovStatsFormatters.reactionColor(stats.reactionTime));
+    const s = data.stats || {};
+
+    this._set('leetify-matches',     NovStatsFormatters.number(s.matches));
+    this._set('leetify-first-match', NovStatsFormatters.date(s.first_match));
+    this._set('leetify-winrate',     s.win_rate != null ? s.win_rate + '%' : null);
+    this._set('leetify-rating',      NovStatsFormatters.score(s.leetify_rating));
+    this._set('leetify-clutching',   NovStatsFormatters.score(s.clutching));
+    this._set('leetify-opening',     NovStatsFormatters.score(s.opening));
+    this._set('leetify-preaim',      s.preaim_angle != null ? s.preaim_angle + '°' : null);
+    this._set('leetify-reaction',    s.reaction_time != null ? s.reaction_time + ' ms' : null);
+    this._set('leetify-kd',          NovStatsFormatters.kd(s.kd_ratio),          NovStatsFormatters.kdColor(s.kd_ratio));
+    this._set('leetify-aim',         NovStatsFormatters.score(s.aim_rating),      NovStatsFormatters.scoreColor(s.aim_rating));
+    this._set('leetify-positioning', NovStatsFormatters.score(s.positioning),     NovStatsFormatters.scoreColor(s.positioning));
+    this._set('leetify-utility',     NovStatsFormatters.score(s.utility),         NovStatsFormatters.scoreColor(s.utility));
   },
 
   // ── CSStats ────────────────────────────────────────────────────────────

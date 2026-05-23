@@ -50,7 +50,7 @@
   "host_permissions": [
     "*://steamcommunity.com/*",
     "*://open.faceit.com/*",
-    "*://api.leetify.com/*",
-    "*://csstats.gg/*"
+    "*://csstats.gg/*",
+    "*://api.cs2ps.com/*"
   ]
 }
