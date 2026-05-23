@@ -19,6 +19,12 @@ const NovStatsDataBinder = {
 
     const s = data.stats || {};
 
+    const premier = s.premier_rating ?? null;
+    if (premier != null) {
+      document.getElementById('ns-leetify-premier-header').style.display = 'flex';
+      this._fillPremierChip('ns-leetify-premier-wrap', premier);
+    }
+
     this._set('leetify-matches',     NovStatsFormatters.number(s.matches));
     this._set('leetify-first-match', NovStatsFormatters.date(s.first_match));
     this._set('leetify-winrate',     s.win_rate != null ? s.win_rate + '%' : null);

@@ -32,24 +32,19 @@ const NovStatsUI = {
       <div class="showcase_content_bg ns-section" id="ns-sec-leetify">
         <div class="ns-sec-header">
           <div class="ns-sec-header-left">
-            <!--
-              IMAGE #1 — Logo Leetify
-              Remplace par : <img src="assets/logos/leetify_logo.png" class="ns-logo-img" />
-            -->
             <a id="ns-leetify-logo-link" target="_blank" rel="noopener">
               <img src="${chrome.runtime.getURL('assets/logos/leetify_logo.png')}" class="ns-logo-img" />
             </a>
+            <div class="ns-premier-header" id="ns-leetify-premier-header" style="display:none">
+              <div class="ns-premier-chip" id="ns-leetify-premier-wrap"></div>
+            </div>
             <div class="ns-sec-meta">
               <span class="ns-sec-title">Leetify</span>
               <span class="ns-sec-sub">Skill ratings</span>
             </div>
           </div>
           <div class="ns-sec-header-right">
-            <!--
-              IMAGE #2 — Badge Leetify
-              Remplace par : <a href="https://leetify.com" target="_blank"><img src="assets/logos/leetify_badge.png" class="ns-badge-img" /></a>
-            -->
-            <div class="ns-ph ns-ph-badge" id="ns-leetify-badge-ph">LEETIFY BADGE</div>
+            <img src="${chrome.runtime.getURL('assets/logos/leetify_badge.png')}" class="ns-badge-img" />
           </div>
         </div>
         <div class="ns-loading" id="ns-leetify-loading">${SPINNER}<span>Chargement Leetify…</span></div>
