@@ -75,10 +75,6 @@ const NovStatsUI = {
       <div class="showcase_content_bg ns-section" id="ns-sec-csstats">
         <div class="ns-sec-header">
           <div class="ns-sec-header-left">
-            <!--
-              IMAGE #3 — Logo CSStats
-              Remplace par : <img src="assets/logos/csstats_logo.png" class="ns-logo-img" />
-            -->
             <a id="ns-csstats-logo-link" target="_blank" rel="noopener">
               <img src="${chrome.runtime.getURL('assets/logos/csstats_logo.png')}" class="ns-logo-img" />
             </a>
@@ -89,6 +85,11 @@ const NovStatsUI = {
               <span class="ns-premier-label">Best</span>
               <div class="ns-premier-chip" id="ns-premier-best-wrap"></div>
             </div>
+          </div>
+          <div class="ns-sec-header-right">
+            <button class="ns-show-ranks-btn" id="ns-csstats-show-ranks" style="display:none">
+              Show all ranks ▾
+            </button>
           </div>
         </div>
         <div class="ns-loading" id="ns-csstats-loading">${SPINNER}<span>Chargement CSStats…</span></div>
@@ -104,6 +105,10 @@ const NovStatsUI = {
           ${this._cell('ADR',           'csstats-adr')}
           ${this._cell('Clutch Chance', 'csstats-clutch')}
           ${this._cell('Best Map',      'csstats-bestmap')}
+        </div>
+        <div id="ns-csstats-expanded" style="display:none">
+          <div class="ns-ranks-divider"></div>
+          <div id="ns-ranks-panels"></div>
         </div>
       </div>
     `;

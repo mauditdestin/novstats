@@ -66,6 +66,25 @@ const NovStatsDataBinder = {
 
     grid.style.display = 'grid';
 
+    // ── Section expandable (Competitive / Premier / Wingman) ──
+    const hasRankData = data.competitive?.length || data.premierSeasons?.length || data.wingman;
+    if (hasRankData) {
+      const toggleBtn = document.getElementById('ns-csstats-show-ranks');
+      const expanded  = document.getElementById('ns-csstats-expanded');
+      const panelsEl  = document.getElementById('ns-ranks-panels');
+
+      if (panelsEl) panelsEl.appendChild(this._buildRanksPanels(data));
+
+      if (toggleBtn && expanded) {
+        toggleBtn.style.display = 'inline';
+        toggleBtn.addEventListener('click', () => {
+          const open = expanded.style.display !== 'none';
+          expanded.style.display = open ? 'none' : 'block';
+          toggleBtn.textContent  = open ? 'Show all ranks ▾' : 'Hide ranks ▴';
+        });
+      }
+    }
+
     this._set('csstats-kd',      NovStatsFormatters.kd(data.kd),           NovStatsFormatters.kdColor(data.kd));
     this._set('csstats-hltv',    data.hltvRating != null ? parseFloat(data.hltvRating).toFixed(2) : 'N/A');
     this._set('csstats-matches', NovStatsFormatters.number(data.matches));
@@ -124,9 +143,9 @@ const NovStatsDataBinder = {
     if (memberEl && data.membership) {
       const lc = data.membership.toLowerCase();
       let label, color;
-      if (lc === 'premium')             { label = 'Faceit Premium'; color = '#ff5500'; }
-      else if (lc === 'free+' || lc === 'plus') { label = 'Faceit Plus';    color = '#ffaa00'; }
-      else                              { label = 'Free';           color = '#6b7d8e'; }
+      if (lc === 'premium')                       { label = 'Faceit Premium'; color = '#ff5500'; }
+      else if (lc === 'free+' || lc === 'plus')   { label = 'Faceit Plus';    color = '#ffaa00'; }
+      else                                         { label = 'Free';           color = '#6b7d8e'; }
       memberEl.textContent = '· ' + label;
       memberEl.style.color = color;
     }
@@ -159,24 +178,154 @@ const NovStatsDataBinder = {
     });
   },
 
-  _fillPremierChip(wrapperId, rating) {
-    const wrap = document.getElementById(wrapperId);
-    if (!wrap) return;
-    wrap.innerHTML = '';
+  // ── Ranks panels builder ───────────────────────────────────────────────
+  _buildRanksPanels(data) {
+    const container = document.createElement('div');
+    container.className = 'ns-ranks-panels';
 
+    // LEFT — Competitive maps
+    if (data.competitive?.length) {
+      const panel = document.createElement('div');
+      panel.className = 'ns-ranks-panel';
+      const rows = data.competitive.map(m =>
+        this._makeRankRow(
+          m.mapImg, m.map,
+          m.map, m.wins,
+          this._makeRankBadge(m.currentImg),
+          this._makeRankBadge(m.bestImg)
+        )
+      );
+      panel.appendChild(this._makeRankSection('Competitive', 'Map', rows, 'competitive'));
+      container.appendChild(panel);
+    }
+
+    // RIGHT — Premier seasons + Wingman
+    const right = document.createElement('div');
+    right.className = 'ns-ranks-panel';
+
+    if (data.premierSeasons?.length) {
+      const rows = data.premierSeasons.map(s => {
+        const cur  = document.createElement('div');
+        cur.className = 'ns-ranks-badge';
+        cur.appendChild(this._makePremierChipEl(s.latest_rating));
+
+        const best = document.createElement('div');
+        best.className = 'ns-ranks-badge';
+        best.appendChild(this._makePremierChipEl(s.best_rating));
+
+        const coinSrc = NovStatsFormatters.premierCoin(s.season, s.best_rating ?? 0, s.wins);
+        return this._makeRankRow(
+          coinSrc, `S${s.season}`,
+          `Season ${s.season}`, s.wins,
+          cur, best
+        );
+      });
+      right.appendChild(this._makeRankSection('Premier', 'Season', rows, 'premier'));
+    }
+
+    if (data.wingman) {
+      const row = this._makeRankRow(
+        data.wingman.iconImg, 'WM',
+        'Wingman', data.wingman.wins,
+        this._makeRankBadge(data.wingman.currentImg),
+        this._makeRankBadge(data.wingman.bestImg)
+      );
+      right.appendChild(this._makeRankSection('Wingman', 'Mode', [row], 'wingman'));
+    }
+
+    if (right.children.length) container.appendChild(right);
+    return container;
+  },
+
+  _makeRankSection(title, col1Label, rows, type) {
+    const section = document.createElement('div');
+    section.className = 'ns-ranks-section' + (type ? ` ns-ranks-section--${type}` : '');
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'ns-ranks-section-title';
+    titleEl.textContent = title;
+    section.appendChild(titleEl);
+
+    const header = document.createElement('div');
+    header.className = 'ns-ranks-col-header';
+    [col1Label, 'Current', 'Best'].forEach(label => {
+      const span = document.createElement('span');
+      span.textContent = label;
+      header.appendChild(span);
+    });
+    section.appendChild(header);
+
+    rows.forEach(row => section.appendChild(row));
+    return section;
+  },
+
+  _makeRankRow(iconSrc, iconFallback, name, wins, currentEl, bestEl) {
+    const row = document.createElement('div');
+    row.className = 'ns-ranks-row';
+
+    const info = document.createElement('div');
+    info.className = 'ns-ranks-info';
+    info.appendChild(this._makeIconEl(iconSrc, iconFallback));
+
+    const text = document.createElement('div');
+    text.className = 'ns-ranks-text';
+    const nameEl = document.createElement('span');
+    nameEl.className = 'ns-ranks-name';
+    nameEl.textContent = name;
+    const winsEl = document.createElement('span');
+    winsEl.className = 'ns-ranks-wins';
+    winsEl.textContent = 'Wins: ' + wins;
+    text.append(nameEl, winsEl);
+    info.appendChild(text);
+
+    row.append(info, currentEl, bestEl);
+    return row;
+  },
+
+  _makeIconEl(src, fallback) {
+    if (src) {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'ns-ranks-icon';
+      img.onerror = () => img.replaceWith(this._makeIconEl(null, fallback));
+      return img;
+    }
+    const ph = document.createElement('div');
+    ph.className = 'ns-ph ns-ranks-ph';
+    ph.textContent = (fallback || '?').slice(0, 3).toUpperCase();
+    return ph;
+  },
+
+  _makeRankBadge(imgSrc) {
+    const wrap = document.createElement('div');
+    wrap.className = 'ns-ranks-badge';
+    if (imgSrc) {
+      const img = document.createElement('img');
+      img.src = imgSrc;
+      img.onerror = () => { img.style.display = 'none'; };
+      wrap.appendChild(img);
+    }
+    return wrap;
+  },
+
+  _makePremierChipEl(rating) {
     const el = document.createElement('div');
     el.className = 'ns-premier-rating';
-
     const bg = document.createElement('img');
     bg.src = NovStatsFormatters.premierBg(rating);
     el.appendChild(bg);
-
     const label = document.createElement('span');
     label.style.color = NovStatsFormatters.premierColor(rating);
     label.textContent = NovStatsFormatters.premierFormat(rating);
     el.appendChild(label);
+    return el;
+  },
 
-    wrap.appendChild(el);
+  _fillPremierChip(wrapperId, rating) {
+    const wrap = document.getElementById(wrapperId);
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    wrap.appendChild(this._makePremierChipEl(rating));
   },
 
   _set(id, value, color) {

@@ -69,22 +69,56 @@ const CSStatsAPI = {
       return parseInt(main + decimal);
     };
 
+    const getRankImg = (container) => {
+      if (!container) return null;
+      const img = container.querySelector('img');
+      if (!img) return null;
+      const src = img.getAttribute('src');
+      if (!src) return null;
+      return src.startsWith('http') ? src : `https://csstats.gg${src}`;
+    };
+
+    const toAbsUrl = src =>
+      !src ? null : src.startsWith('http') ? src : `https://csstats.gg${src}`;
+
+    const getIconUrl = (iconEl) =>
+      toAbsUrl(iconEl?.querySelector('img')?.getAttribute('src'));
+
     const premierRatings = [];
+    let wingmanData  = null;
+    const competitive = [];
+
     profile.querySelectorAll('#player-ranks .ranks').forEach(rankDiv => {
       const icon = rankDiv.querySelector('.icon');
       if (!icon) return;
-      const alt = icon.querySelector('img')?.getAttribute('alt') ?? '';
-      if (!alt.startsWith('Premier')) return;
+      const alt  = icon.querySelector('img')?.getAttribute('alt') ?? '';
+      const wins = parseInt(rankDiv.querySelector('.bottom .wins b')?.textContent.trim()) || 0;
 
-      const wins        = parseInt(rankDiv.querySelector('.bottom .wins b')?.textContent.trim()) || 0;
-      const seasonMatch = alt.match(/Season (\d+)/);
-
-      premierRatings.push({
-        season:        seasonMatch ? parseInt(seasonMatch[1]) : 1,
-        latest_rating: getRating(rankDiv.querySelector('.rank')),
-        best_rating:   getRating(rankDiv.querySelector('.best')),
-        wins
-      });
+      if (alt.startsWith('Premier')) {
+        const seasonMatch = alt.match(/Season (\d+)/);
+        premierRatings.push({
+          season:        seasonMatch ? parseInt(seasonMatch[1]) : 1,
+          seasonImg:     getIconUrl(icon),
+          latest_rating: getRating(rankDiv.querySelector('.rank')),
+          best_rating:   getRating(rankDiv.querySelector('.best')),
+          wins
+        });
+      } else if (alt.toLowerCase().includes('wingman') && !wingmanData) {
+        wingmanData = {
+          wins,
+          iconImg:    getIconUrl(icon),
+          currentImg: getRankImg(rankDiv.querySelector('.rank')),
+          bestImg:    getRankImg(rankDiv.querySelector('.best'))
+        };
+      } else if (alt && !alt.toLowerCase().includes('faceit')) {
+        competitive.push({
+          map:        alt,
+          mapImg:     getIconUrl(icon),
+          wins,
+          currentImg: getRankImg(rankDiv.querySelector('.rank')),
+          bestImg:    getRankImg(rankDiv.querySelector('.best'))
+        });
+      }
     });
 
     // ── Map avec le meilleur winrate ──
@@ -129,7 +163,10 @@ const CSStatsAPI = {
       clutch,
       bestMap,
       currentPremier,
-      bestPremier
+      bestPremier,
+      premierSeasons: premierRatings,
+      competitive,
+      wingman: wingmanData
     };
 
     NovStatsCache.set(cacheKey, data);

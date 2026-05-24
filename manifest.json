@@ -42,7 +42,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["assets/faceit_levels/*.png", "assets/premier_ratings/*.svg", "assets/logos/*.png"],
+      "resources": ["assets/faceit_levels/*.png", "assets/premier_ratings/*.svg", "assets/logos/*.png", "assets/premier_coins/*.png"],
       "matches": ["*://steamcommunity.com/*"]
     }
   ],

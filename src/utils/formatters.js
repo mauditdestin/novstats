@@ -113,6 +113,22 @@ const NovStatsFormatters = {
     return chrome.runtime.getURL(`assets/premier_ratings/${this.premierRankName(rating)}.svg`);
   },
 
+  premierCoinProgress(wins) {
+    if (wins < 50)  return '1';
+    if (wins < 75)  return '2';
+    if (wins < 100) return '3';
+    if (wins < 125) return '4';
+    return '5';
+  },
+
+  premierCoin(season, rating, wins) {
+    if (wins < 25)   return chrome.runtime.getURL(`assets/premier_coins/${season}.png`);
+    if (season === 1) return chrome.runtime.getURL('assets/premier_coins/1.png');
+    const color    = this.premierRankName(rating ?? 0);
+    const progress = this.premierCoinProgress(wins);
+    return chrome.runtime.getURL(`assets/premier_coins/${season}_${color}_${progress}.png`);
+  },
+
   eloColor(elo) {
     if (!elo) return '#6b7d8e';
     const n = parseInt(elo);
