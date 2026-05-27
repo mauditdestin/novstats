@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "NOVSTATS",
+  "version": "1.0",
+  "description": "Stats CS2 Faceit, Leetify & CSStats directement sur les profils Steam",
+  "icons": {
+    "16": "assets/logos/novstatslogo.png",
+    "48": "assets/logos/novstatslogo.png",
+    "128": "assets/logos/novstatslogo.png"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/logos/novstatslogo.png",
+      "48": "assets/logos/novstatslogo.png",
+      "128": "assets/logos/novstatslogo.png"
+    },
+    "default_title": "NOVSTATS"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://steamcommunity.com/id/*",
+        "*://steamcommunity.com/profiles/*"
+      ],
+      "css": ["src/styles/content.css"],
+      "js": [
+        "src/utils/formatters.js",
+        "src/utils/cache.js",
+        "src/api/faceit.js",
+        "src/api/leetify.js",
+        "src/api/csstats.js",
+        "src/content/ui-builder.js",
+        "src/content/data-binder.js",
+        "src/content/events.js",
+        "src/content/main.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/faceit_levels/*.png", "assets/premier_ratings/*.svg", "assets/logos/*.png", "assets/premier_coins/*.png", "assets/map_icons/*.png"],
+      "matches": ["*://steamcommunity.com/*"]
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://steamcommunity.com/*",
+    "*://csstats.gg/*",
+    "*://api.cs2ps.com/*"
+  ]
+}

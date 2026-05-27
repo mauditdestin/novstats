@@ -189,7 +189,7 @@ const NovStatsDataBinder = {
       panel.className = 'ns-ranks-panel';
       const rows = data.competitive.map(m =>
         this._makeRankRow(
-          m.mapImg, m.map,
+          NovStatsFormatters.mapIcon(m.map), m.mapImg,
           m.map, m.wins,
           this._makeRankBadge(m.currentImg),
           this._makeRankBadge(m.bestImg)
@@ -288,6 +288,13 @@ const NovStatsDataBinder = {
       img.src = src;
       img.className = 'ns-ranks-icon';
       img.onerror = () => img.replaceWith(this._makeIconEl(null, fallback));
+      return img;
+    }
+    if (fallback && (fallback.startsWith('http') || fallback.startsWith('chrome-extension'))) {
+      const img = document.createElement('img');
+      img.src = fallback;
+      img.className = 'ns-ranks-icon';
+      img.onerror = () => img.replaceWith(this._makeIconEl(null, null));
       return img;
     }
     const ph = document.createElement('div');

@@ -1,6 +1,6 @@
 (async () => {
   const url = window.location.href;
-  if (!url.includes('/profiles/') && !url.includes('/id/')) return;
+  if (!/steamcommunity\.com\/(id|profiles)\/[^\/]+\/?$/.test(url.split('?')[0])) return;
   if (document.querySelector('.novstats-root')) return;
 
   if (document.readyState === 'loading') {

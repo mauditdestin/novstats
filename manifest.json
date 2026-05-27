@@ -2,18 +2,18 @@
   "manifest_version": 3,
   "name": "NOVSTATS",
   "version": "1.0",
-  "description": "Stats CS2 Faceit, Leetify & CSStats directement sur les profils Steam",
+  "description": "Novstats, THE Counter-Strike statistics extension.",
   "icons": {
-    "16": "assets/faceit_levels/1.png",
-    "48": "assets/faceit_levels/4.png",
-    "128": "assets/faceit_levels/7.png"
+    "16": "assets/logos/novstatslogo.png",
+    "48": "assets/logos/novstatslogo.png",
+    "128": "assets/logos/novstatslogo.png"
   },
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": {
-      "16": "assets/faceit_levels/1.png",
-      "48": "assets/faceit_levels/4.png",
-      "128": "assets/faceit_levels/7.png"
+      "16": "assets/logos/novstatslogo.png",
+      "48": "assets/logos/novstatslogo.png",
+      "128": "assets/logos/novstatslogo.png"
     },
     "default_title": "NOVSTATS"
   },
@@ -42,7 +42,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["assets/faceit_levels/*.png", "assets/premier_ratings/*.svg", "assets/logos/*.png", "assets/premier_coins/*.png"],
+      "resources": ["assets/faceit_levels/*.png", "assets/premier_ratings/*.svg", "assets/logos/*.png", "assets/premier_coins/*.png", "assets/map_icons/*.png"],
       "matches": ["*://steamcommunity.com/*"]
     }
   ],

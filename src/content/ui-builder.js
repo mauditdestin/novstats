@@ -13,7 +13,10 @@ const NovStatsUI = {
     root.innerHTML = `
       <div class="profile_customization_header ns-main-header">
         <div class="ns-main-header-left">
-          <span class="ns-logo">NOV<span class="ns-accent">STATS</span></span>
+          <a href="https://nvmb.lol" target="_blank" rel="noopener noreferrer" class="ns-header-link">
+            <img src="${chrome.runtime.getURL('assets/logos/novstatslogo.png')}" class="ns-header-logo" />
+            <span class="ns-logo">NOV<span class="ns-accent">STATS</span></span>
+          </a>
         </div>
         <button class="ns-collapse-btn" title="Réduire">▲</button>
       </div>

@@ -109,6 +109,11 @@ const NovStatsFormatters = {
     return new Intl.NumberFormat('en-US').format(rating);
   },
 
+  mapIcon(mapName) {
+    const key = (mapName || '').toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+    return chrome.runtime.getURL(`assets/map_icons/${key}.png`);
+  },
+
   premierBg(rating) {
     return chrome.runtime.getURL(`assets/premier_ratings/${this.premierRankName(rating)}.svg`);
   },

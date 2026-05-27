@@ -26,6 +26,23 @@
   gap: 10px;
 }
 
+.ns-header-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.ns-header-link:hover .ns-logo {
+  color: #66c0f4;
+}
+
+.ns-header-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+
 .ns-logo {
   font-size: 13px;
   font-weight: 800;
@@ -479,6 +496,11 @@
 .ns-ranks-section--premier .ns-ranks-col-header,
 .ns-ranks-section--premier .ns-ranks-row {
   grid-template-columns: 1fr 72px 72px;
+}
+.ns-ranks-section--premier .ns-ranks-icon,
+.ns-ranks-section--premier .ns-ranks-ph {
+  width: 36px;
+  height: 36px;
 }
 .ns-ranks-section--premier .ns-ranks-badge .ns-premier-rating {
   height: 24px;
