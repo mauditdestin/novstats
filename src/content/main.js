@@ -19,6 +19,12 @@
   if (!prefs.showLeetify) document.getElementById('ns-sec-leetify').style.display = 'none';
   if (!prefs.showCSStats) document.getElementById('ns-sec-csstats').style.display = 'none';
   if (!prefs.showFaceit)  document.getElementById('ns-sec-faceit').style.display  = 'none';
+  if (prefs.compactMode)  panel.classList.add('ns-compact');
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'sync' || !changes.compactMode) return;
+    panel.classList.toggle('ns-compact', changes.compactMode.newValue);
+  });
 
   document.getElementById('ns-leetify-logo-link').href = `https://leetify.com/app/profile/${steam64id}`;
   document.getElementById('ns-csstats-logo-link').href = `https://csstats.gg/player/${steam64id}`;
@@ -39,7 +45,7 @@
 function getPrefs() {
   return new Promise(resolve => {
     chrome.storage.sync.get(
-      { showLeetify: true, showCSStats: true, showFaceit: true },
+      { showLeetify: true, showCSStats: true, showFaceit: true, compactMode: false },
       resolve
     );
   });

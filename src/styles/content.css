@@ -9,6 +9,11 @@
   font-family: 'Motiva Sans', Arial, sans-serif;
 }
 
+/* ── Mode compact ── */
+.novstats-root.ns-compact [data-compact="hide"] {
+  display: none !important;
+}
+
 /* ── Header principal (Steam native class .profile_customization_header) ── */
 .novstats-root .profile_customization_header.ns-main-header {
   display: flex !important;

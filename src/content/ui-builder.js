@@ -55,18 +55,18 @@ const NovStatsUI = {
           <span id="ns-leetify-error-msg">&#9888; Profil Leetify introuvable</span>
         </div>
         <div class="ns-details" id="ns-leetify-grid" style="display:none">
-          ${this._cell('Matchs',      'leetify-matches')}
-          ${this._cell('1er Match',   'leetify-first-match')}
+          ${this._cell('Matchs',      'leetify-matches',      true)}
+          ${this._cell('1er Match',   'leetify-first-match',  true)}
           ${this._cell('Winrate',     'leetify-winrate')}
           ${this._cell('Rating',      'leetify-rating')}
-          ${this._cell('Clutching',   'leetify-clutching')}
-          ${this._cell('Opening',     'leetify-opening')}
-          ${this._cell('Pre-aim',     'leetify-preaim')}
-          ${this._cell('Reaction',    'leetify-reaction')}
+          ${this._cell('Clutching',   'leetify-clutching',    true)}
+          ${this._cell('Opening',     'leetify-opening',      true)}
+          ${this._cell('Pre-aim',     'leetify-preaim',       true)}
+          ${this._cell('Reaction',    'leetify-reaction',     true)}
           ${this._cell('KD',          'leetify-kd')}
           ${this._cell('Aim',         'leetify-aim')}
-          ${this._cell('Positioning', 'leetify-positioning')}
-          ${this._cell('Utility',     'leetify-utility')}
+          ${this._cell('Positioning', 'leetify-positioning',  true)}
+          ${this._cell('Utility',     'leetify-utility',      true)}
         </div>
       </div>
     `;
@@ -102,12 +102,12 @@ const NovStatsUI = {
         <div class="ns-details" id="ns-csstats-grid" style="display:none">
           ${this._cell('K/D Ratio',     'csstats-kd')}
           ${this._cell('HLTV Rating',   'csstats-hltv')}
-          ${this._cell('Matchs',        'csstats-matches')}
+          ${this._cell('Matchs',        'csstats-matches',  true)}
           ${this._cell('Winrate',       'csstats-winrate')}
           ${this._cell('HS%',           'csstats-hs')}
-          ${this._cell('ADR',           'csstats-adr')}
-          ${this._cell('Clutch Chance', 'csstats-clutch')}
-          ${this._cell('Best Map',      'csstats-bestmap')}
+          ${this._cell('ADR',           'csstats-adr',      true)}
+          ${this._cell('Clutch Chance', 'csstats-clutch',   true)}
+          ${this._cell('Best Map',      'csstats-bestmap',  true)}
         </div>
         <div id="ns-csstats-expanded" style="display:none">
           <div class="ns-ranks-divider"></div>
@@ -150,13 +150,13 @@ const NovStatsUI = {
           <span id="ns-faceit-error-msg">&#9888; Compte Faceit introuvable</span>
         </div>
         <div class="ns-details" id="ns-faceit-grid" style="display:none">
-          ${this._cell('Créé le',    'faceit-created')}
+          ${this._cell('Créé le',    'faceit-created',   true)}
           ${this._cell('Matchs',     'faceit-matches')}
           ${this._cell('KD',         'faceit-kd')}
           ${this._cell('HS%',        'faceit-hs')}
           ${this._cell('Winrate',    'faceit-winrate')}
-          ${this._cell('Avg. Kills', 'faceit-avg-kills')}
-          <div class="ns-cell ns-cell-recent">
+          ${this._cell('Avg. Kills', 'faceit-avg-kills', true)}
+          <div class="ns-cell ns-cell-recent" data-compact="hide">
             Récents
             <div class="ns-recent-wrap" id="ns-faceit-recent">—</div>
           </div>
@@ -165,8 +165,9 @@ const NovStatsUI = {
     `;
   },
 
-  _cell(label, id) {
-    return `<div class="ns-cell">${label}<span id="ns-${id}">—</span></div>`;
+  _cell(label, id, compactHide = false) {
+    const attr = compactHide ? ' data-compact="hide"' : '';
+    return `<div class="ns-cell"${attr}>${label}<span id="ns-${id}">—</span></div>`;
   },
 
   inject(panel) {
