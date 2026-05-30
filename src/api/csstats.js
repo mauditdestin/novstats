@@ -1,7 +1,7 @@
 const CSStatsAPI = {
   async fetchHtml(url) {
     return new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage({ type: 'FETCH_HTML', url }, res => {
+      chrome.runtime.sendMessage({ type: 'FETCH_TEXT', url }, res => {
         if (chrome.runtime.lastError) return reject(new Error(chrome.runtime.lastError.message));
         if (res.ok) resolve(res.data);
         else reject(new Error(res.error));

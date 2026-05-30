@@ -1,1 +1,0 @@
-const NovStatsEvents={setup(t){const e=t.querySelector(".ns-collapse-btn"),n=t.querySelector(".profile_customization_block");e.addEventListener("click",()=>{const t="none"===n.style.display;n.style.display=t?"":"none",e.textContent=t?"▲":"▼"})}};

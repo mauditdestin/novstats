@@ -4,18 +4,21 @@
   "version": "1.0",
   "description": "Novstats, THE Counter-Strike statistics extension.",
   "icons": {
-    "16": "assets/logos/novstatslogo.png",
-    "48": "assets/logos/novstatslogo.png",
+    "16":  "assets/logos/novstatslogo.png",
+    "48":  "assets/logos/novstatslogo.png",
     "128": "assets/logos/novstatslogo.png"
   },
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": {
-      "16": "assets/logos/novstatslogo.png",
-      "48": "assets/logos/novstatslogo.png",
+      "16":  "assets/logos/novstatslogo.png",
+      "48":  "assets/logos/novstatslogo.png",
       "128": "assets/logos/novstatslogo.png"
     },
     "default_title": "NOVSTATS"
+  },
+  "background": {
+    "service_worker": "src/background/background.js"
   },
   "content_scripts": [
     {
@@ -23,33 +26,41 @@
         "*://steamcommunity.com/id/*",
         "*://steamcommunity.com/profiles/*"
       ],
-      "css": ["src/styles/content.css"],
+      "css": ["src/steam/steam.css"],
       "js": [
-        "src/utils/formatters.js",
-        "src/utils/cache.js",
-        "src/api/faceit.js",
+        "src/shared/storage.js",
+        "src/shared/formatters.js",
+        "src/shared/cache.js",
         "src/api/leetify.js",
         "src/api/csstats.js",
-        "src/content/ui-builder.js",
-        "src/content/data-binder.js",
-        "src/content/events.js",
-        "src/content/main.js"
+        "src/api/faceit.js",
+        "src/steam/ui.js",
+        "src/steam/binder.js",
+        "src/steam/main.js"
       ]
     }
   ],
-  "background": {
-    "service_worker": "src/background/background.js"
-  },
   "web_accessible_resources": [
     {
-      "resources": ["assets/faceit_levels/*.png", "assets/premier_ratings/*.svg", "assets/logos/*.png", "assets/premier_coins/*.png", "assets/map_icons/*.png"],
-      "matches": ["*://steamcommunity.com/*"]
+      "resources": [
+        "assets/logos/*.png",
+        "assets/faceit_levels/*.png",
+        "assets/premier_ratings/*.svg",
+        "assets/premier_coins/*.png",
+        "assets/map_icons/*.png"
+      ],
+      "matches": [
+        "*://steamcommunity.com/*",
+        "*://www.faceit.com/*"
+      ]
     }
   ],
   "permissions": ["storage"],
   "host_permissions": [
     "*://steamcommunity.com/*",
     "*://csstats.gg/*",
-    "*://api.cs2ps.com/*"
+    "*://api.cs2ps.com/*",
+    "*://www.faceit.com/*",
+    "*://flagsapi.com/*"
   ]
 }

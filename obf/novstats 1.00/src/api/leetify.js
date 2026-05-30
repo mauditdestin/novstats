@@ -1,1 +1,0 @@
-const LeetifyAPI={async getProfile(e){const t=`leetify_${e}`,s=NovStatsCache.get(t);return s||new Promise(s=>{chrome.runtime.sendMessage({type:"FETCH",url:`https://api.cs2ps.com/api/stats/leetify/${e}`},e=>{if(chrome.runtime.lastError||!e)return s(null);const r=e.ok?e.data:null;r&&NovStatsCache.set(t,r),s(r)})})}};

@@ -1,1 +1,0 @@
-const NovStatsCache={PREFIX:"novstats_",TTL:3e5,set(t,e){try{localStorage.setItem(this.PREFIX+t,JSON.stringify({value:e,ts:Date.now()}))}catch(t){}},get(t){try{const e=localStorage.getItem(this.PREFIX+t);if(!e)return null;const{value:a,ts:s}=JSON.parse(e);return Date.now()-s>this.TTL?(localStorage.removeItem(this.PREFIX+t),null):a}catch(t){return null}}};
